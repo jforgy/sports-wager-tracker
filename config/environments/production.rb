@@ -2,7 +2,7 @@ Rails.application.configure do
   # ... existing configuration ...
 
   # Allow Railway domain
-  config.hosts << "sports-wager-tracker-production.up.railway.app"
+  config.hosts.clear
   
   # Also allow with protocol variations
   config.hosts << ENV['RAILWAY_PUBLIC_DOMAIN'] if ENV['RAILWAY_PUBLIC_DOMAIN']

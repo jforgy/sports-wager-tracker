@@ -1,16 +1,6 @@
 Rails.application.configure do
-    # Debug host issues
-    config.log_level = :debug
-    config.hosts = nil
-    
-    # Log the actual host being requested
-    config.middleware.insert_before ActionDispatch::HostAuthorization, lambda { |env|
-      Rails.logger.info "Requested Host: #{env['HTTP_HOST']}"
-      Rails.logger.info "Server Name: #{env['SERVER_NAME']}"
-      [200, {}, []]
-    }
   # COMPLETELY disable host checking - should work for any hostname
-  config.hosts = nil
+  config.hosts.clear
   
   # Alternative - allow everything
   config.force_ssl = false

@@ -1,3 +1,5 @@
+ENV['RAILS_ENV'] = 'production' unless ENV['RAILS_ENV']
+
 require_relative "boot"
 
 require "rails/all"

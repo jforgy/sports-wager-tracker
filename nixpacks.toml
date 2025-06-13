@@ -1,0 +1,14 @@
+[variables]
+NIXPACKS_NO_CACHE = '1'
+
+[phases.setup]
+nixPkgs = ['ruby_3_4']
+
+[phases.build]
+cmds = [
+  'bundle install --deployment --without development test',
+  'bundle exec rails assets:precompile'
+]
+
+[start]
+cmd = 'bundle exec rails server -b 0.0.0.0 -p $PORT'

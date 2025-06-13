@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root 'wagers#index'
   resources :wagers
   get '/health', to: 'health#check'
+  get '/test-email', to: 'test#email'
 end

@@ -5,7 +5,7 @@ ruby "3.4.4"
 
 gem "rails", "~> 7.1.0"
 gem "sqlite3", "~> 1.4"
-gem "puma", "~> 5.0"
+gem "puma", "~> 6.0"
 gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"

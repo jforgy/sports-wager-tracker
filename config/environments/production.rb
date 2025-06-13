@@ -94,4 +94,21 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+    # Email configuration
+    config.action_mailer.default_url_options = { host: ENV['RAILWAY_PUBLIC_DOMAIN'] || 'localhost' }
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.perform_deliveries = true
+    config.action_mailer.smtp_settings = {
+      address: 'smtp.mailgun.org',
+      port: 587,
+      domain: ENV['MAILGUN_DOMAIN'],
+      user_name: ENV['MAILGUN_SMTP_LOGIN'],
+      password: ENV['MAILGUN_SMTP_PASSWORD'],
+      authentication: 'plain',
+      enable_starttls_auto: true
+    }
+
+    # Static files
+    config.public_file_server.enabled = true
 end

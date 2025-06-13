@@ -1,0 +1,48 @@
+<%= form_with(model: wager, local: true, class: "row g-3") do |form| %>
+  <% if wager.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(wager.errors.count, "error") %> prohibited this wager from being saved:</h4>
+      <ul class="mb-0">
+        <% wager.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="col-md-6">
+    <%= form.label :date, class: "form-label" %>
+    <%= form.date_field :date, class: "form-control" %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :amount, "Wager Amount ($)", class: "form-label" %>
+    <%= form.number_field :amount, step: 0.01, class: "form-control" %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :odds, "Odds (e.g., +150, -110, 2.5)", class: "form-label" %>
+    <%= form.text_field :odds, class: "form-control" %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :result, class: "form-label" %>
+    <%= form.select :result, options_for_select([['Win', 'Win'], ['Loss', 'Loss'], ['Push', 'Push']], wager.result), 
+                    { prompt: 'Select result' }, { class: "form-select" } %>
+  </div>
+
+  <div class="col-12">
+    <%= form.label :sportsbook, class: "form-label" %>
+    <%= form.text_field :sportsbook, class: "form-control" %>
+  </div>
+
+  <div class="col-12">
+    <%= form.label :tags, "Tags (comma separated)", class: "form-label" %>
+    <%= form.text_area :tags, rows: 2, class: "form-control" %>
+  </div>
+
+  <div class="col-12">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to 'Cancel', wagers_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>

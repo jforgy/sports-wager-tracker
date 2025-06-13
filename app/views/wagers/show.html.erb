@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-md-8">
+    <h1>Wager Details</h1>
+    
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-3"><strong>Date:</strong></div>
+          <div class="col-sm-9"><%= @wager.date.strftime("%B %d, %Y") %></div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3"><strong>Amount:</strong></div>
+          <div class="col-sm-9">$<%= number_with_precision(@wager.amount, precision: 2) %></div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3"><strong>Odds:</strong></div>
+          <div class="col-sm-9"><%= @wager.odds %></div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3"><strong>Result:</strong></div>
+          <div class="col-sm-9">
+            <span class="badge <%= @wager.result == 'Win' ? 'bg-success' : @wager.result == 'Loss' ? 'bg-danger' : 'bg-secondary' %>">
+              <%= @wager.result %>
+            </span>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3"><strong>Profit/Loss:</strong></div>
+          <div class="col-sm-9">
+            <span class="<%= @wager.profit_loss >= 0 ? 'text-success' : 'text-danger' %>">
+              $<%= number_with_precision(@wager.profit_loss, precision: 2) %>
+            </span>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3"><strong>Sportsbook:</strong></div>
+          <div class="col-sm-9"><%= @wager.sportsbook %></div>
+        </div>
+        <% if @wager.tags.present? %>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3"><strong>Tags:</strong></div>
+            <div class="col-sm-9"><%= @wager.tags %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    
+    <div class="mt-3">
+      <%= link_to 'Edit', edit_wager_path(@wager), class: 'btn btn-primary' %>
+      <%= link_to 'Back to Wagers', wagers_path, class: 'btn btn-secondary' %>
+      <%= link_to 'Delete', @wager, method: :delete, 
+                  confirm: 'Are you sure?', 
+                  class: 'btn btn-danger' %>
+    </div>
+  </div>
+</div>

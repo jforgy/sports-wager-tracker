@@ -1,0 +1,44 @@
+# Dependencies
+/node_modules
+/vendor/bundle
+
+# Database
+/db/*.sqlite3
+/db/*.sqlite3-*
+
+# Logs
+/log/*
+!/log/.keep
+
+# Temporary files
+/tmp/*
+!/tmp/.keep
+
+# Storage
+/storage/*
+!/storage/.keep
+
+# Master key for decrypting credentials
+/config/master.key
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Rails
+/public/assets
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

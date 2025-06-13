@@ -1,10 +1,21 @@
 Rails.application.configure do
-  # Put debug at the very beginning
-  puts "=== EMAIL DEBUG START ==="
-  puts "Rails env: #{Rails.env}"
-  puts "=== EMAIL DEBUG END ==="
+  # Force log this immediately
+  puts "=== PRODUCTION CONFIG LOADING ==="
+  puts "RAILS_ENV: #{ENV['RAILS_ENV']}"
+  puts "==================================="
 
-  # ... your existing configuration ...
+  # Settings specified here will take precedence over those in config/application.rb.
+  config.cache_classes = true
+  config.eager_load = true
+  config.consider_all_requests_local = false
+  config.action_controller.perform_caching = true
+  config.require_master_key = false  # Change this to false
+  config.public_file_server.enabled = true  # Enable static files
+  config.assets.compile = true  # Allow asset compilation
+  config.assets.digest = true
+
+  # Clear hosts
+  config.hosts.clear
 
   # Email configuration
   config.action_mailer.default_url_options = { 
@@ -30,11 +41,7 @@ Rails.application.configure do
     puts "=== EMAIL CONFIG DEBUG ==="
     puts "Delivery method: #{ActionMailer::Base.delivery_method}"
     puts "Perform deliveries: #{ActionMailer::Base.perform_deliveries}"
-    puts "SMTP settings: #{ActionMailer::Base.smtp_settings.inspect}"
     puts "API Key present: #{ENV['SENDGRID_API_KEY'].present?}"
-    puts "API Key length: #{ENV['SENDGRID_API_KEY']&.length}"
     puts "==========================="
   end
-
-  # ... rest of your configuration ...
 end

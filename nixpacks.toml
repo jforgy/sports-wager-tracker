@@ -6,8 +6,7 @@ nixPkgs = ['ruby']
 
 [phases.build]
 cmds = [
-  'bundle install --deployment --without development test',
-  'bundle exec rails assets:precompile'
+  'bundle install --deployment --without development test'
 ]
 
 [start]

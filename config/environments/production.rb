@@ -4,15 +4,18 @@ Rails.application.configure do
   puts "RAILS_ENV: #{ENV['RAILS_ENV']}"
   puts "==================================="
 
-  # Settings specified here will take precedence over those in config/application.rb.
+  # Basic production settings
   config.cache_classes = true
   config.eager_load = true
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
-  config.require_master_key = false  # Change this to false
-  config.public_file_server.enabled = true  # Enable static files
-  config.assets.compile = true  # Allow asset compilation
-  config.assets.digest = true
+  
+  # DISABLE all asset pipeline issues
+  config.require_master_key = false
+  config.public_file_server.enabled = true
+  config.assets.compile = false
+  config.assets.digest = false
+  config.serve_static_assets = true
 
   # Clear hosts
   config.hosts.clear
@@ -36,11 +39,10 @@ Rails.application.configure do
     domain: 'railway.app'
   }
 
-  # Debug email config after setting it
+  # Debug email config
   config.after_initialize do
     puts "=== EMAIL CONFIG DEBUG ==="
     puts "Delivery method: #{ActionMailer::Base.delivery_method}"
-    puts "Perform deliveries: #{ActionMailer::Base.perform_deliveries}"
     puts "API Key present: #{ENV['SENDGRID_API_KEY'].present?}"
     puts "==========================="
   end

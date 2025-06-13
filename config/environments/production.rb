@@ -7,6 +7,10 @@ Rails.application.configure do
   config.hosts << /.*/ 
 
   # SendGrid email configuration (your existing email config)
+  config.action_mailer.default_url_options = { 
+    host: 'sports-wager-tracker-production.up.railway.app',
+    protocol: 'https'
+  }
   config.action_mailer.default_url_options = { host: ENV['RAILWAY_PUBLIC_DOMAIN'] || 'localhost' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true

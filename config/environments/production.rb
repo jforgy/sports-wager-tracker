@@ -1,11 +1,20 @@
 Rails.application.configure do
-  # ... existing configuration ...
-
-  # Allow Railway domain
-  config.hosts.clear
+    # Debug host issues
+    config.log_level = :debug
+    config.hosts = nil
+    
+    # Log the actual host being requested
+    config.middleware.insert_before ActionDispatch::HostAuthorization, lambda { |env|
+      Rails.logger.info "Requested Host: #{env['HTTP_HOST']}"
+      Rails.logger.info "Server Name: #{env['SERVER_NAME']}"
+      [200, {}, []]
+    }
+  # COMPLETELY disable host checking - should work for any hostname
+  config.hosts = nil
   
-  # Also allow with protocol variations
-  config.hosts << ENV['RAILWAY_PUBLIC_DOMAIN'] if ENV['RAILWAY_PUBLIC_DOMAIN']
+  # Alternative - allow everything
+  config.force_ssl = false
+  config.hosts << /.*/ 
 
   # SendGrid email configuration (your existing email config)
   config.action_mailer.default_url_options = { host: ENV['RAILWAY_PUBLIC_DOMAIN'] || 'localhost' }

@@ -1,21 +1,28 @@
-ENV['RAILS_ENV'] ||= 'production'
 require_relative "boot"
 
 require "rails/all"
 
-# Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
+# Require the gems listed in Gemfile
 Bundler.require(*Rails.groups)
 
 module SportsWagerTracker
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 
-    # NUCLEAR OPTION - completely disable host authorization
+    # DISABLE HOST AUTHORIZATION COMPLETELY
     config.hosts.clear
     config.middleware.delete ActionDispatch::HostAuthorization
     
-    # Force disable host authorization another way
-    config.force_ssl = false
+    # Auto-migrate in production
+    config.after_initialize do
+      if Rails.env.production?
+        begin
+          ActiveRecord::Migrator.migrate(ActiveRecord::Tasks::DatabaseTasks.migrations_paths)
+        rescue => e
+          Rails.logger.error "Migration failed: #{e.message}"
+        end
+      end
+    end
   end
 end

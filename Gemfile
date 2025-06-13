@@ -15,7 +15,6 @@ gem "devise"
 gem "bootstrap", "~> 5.2"
 gem "sassc-rails"
 gem "sendgrid-ruby"
-gem "sendgird-actionmailer"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

@@ -208,7 +208,6 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    ruby_http_client (3.5.5)
     sassc (2.4.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -218,8 +217,6 @@ GEM
       sprockets-rails
       tilt
     securerandom (0.4.1)
-    sendgrid-ruby (6.7.0)
-      ruby_http_client (~> 3.4)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger
@@ -268,7 +265,6 @@ DEPENDENCIES
   puma (~> 6.0)
   rails (~> 7.1.0)
   sassc-rails
-  sendgrid-ruby
   sqlite3 (~> 1.4)
   stimulus-rails
   turbo-rails

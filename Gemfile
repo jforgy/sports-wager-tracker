@@ -14,6 +14,7 @@ gem "bootsnap", ">= 1.4.4", require: false
 gem "devise"
 gem "bootstrap", "~> 5.2"
 gem "sassc-rails"
+gem"tzinfo-data"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

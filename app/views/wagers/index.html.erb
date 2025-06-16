@@ -25,16 +25,18 @@
   <div class="col-md-3">
     <div class="card text-center">
       <div class="card-body">
-        <h5 class="card-title">Win Rate</h5>
-        <p class="card-text h4"><%= @win_percentage %>%</p>
+        <h5 class="card-title">ROI</h5>
+        <p class="card-text h4 <%= @roi_percentage >= 0 ? 'text-success' : 'text-danger' %>">
+          <%= @roi_percentage %>%
+        </p>
       </div>
     </div>
   </div>
   <div class="col-md-3">
     <div class="card text-center">
       <div class="card-body">
-        <h5 class="card-title">Total Wagers</h5>
-        <p class="card-text h4"><%= @wagers.count %></p>
+        <h5 class="card-title">Win Rate</h5>
+        <p class="card-text h4"><%= @win_percentage %>%</p>
       </div>
     </div>
   </div>

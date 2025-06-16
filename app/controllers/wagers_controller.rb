@@ -6,6 +6,9 @@ class WagersController < ApplicationController
     @total_wagered = @wagers.sum(:amount)
     @total_profit_loss = @wagers.sum(&:profit_loss)
     @win_percentage = @wagers.count > 0 ? (@wagers.wins.count.to_f / @wagers.count * 100).round(1) : 0
+    
+    # Calculate ROI
+    @roi_percentage = @total_wagered > 0 ? ((@total_profit_loss / @total_wagered) * 100).round(1) : 0
   end
   
   def show

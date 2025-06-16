@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.4.4" 
+ruby "3.4.4"
 
 gem "rails", "~> 7.1.0"
 gem "sqlite3", "~> 1.4"
@@ -14,7 +14,6 @@ gem "bootsnap", ">= 1.4.4", require: false
 gem "devise"
 gem "bootstrap", "~> 5.2"
 gem "sassc-rails"
-gem "sendgrid-ruby"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

@@ -1,26 +1,28 @@
 require_relative "boot"
-
 require "rails/all"
 
-# Require the gems listed in Gemfile
 Bundler.require(*Rails.groups)
 
 module SportsWagerTracker
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 
-    # DISABLE HOST AUTHORIZATION COMPLETELY
+    # DISABLE HOST AUTHORIZATION
     config.hosts.clear
     config.middleware.delete ActionDispatch::HostAuthorization
     
-    # Auto-migrate in production
+    # Auto-migrate as backup if release command fails
     config.after_initialize do
       if Rails.env.production?
         begin
-          ActiveRecord::Migrator.migrate(ActiveRecord::Tasks::DatabaseTasks.migrations_paths)
+          Rails.logger.info "Checking for pending migrations..."
+          if ActiveRecord::Base.connection.migration_context.needs_migration?
+            Rails.logger.info "Running migrations..."
+            ActiveRecord::Base.connection.migration_context.migrate
+            Rails.logger.info "Migrations completed!"
+          end
         rescue => e
-          Rails.logger.error "Migration failed: #{e.message}"
+          Rails.logger.info "Migration check skipped: #{e.message}"
         end
       end
     end

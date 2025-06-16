@@ -19,4 +19,9 @@ gem"tzinfo-data"
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "web-console"
+  gem "sqlite3", "~> 1.4"  # SQLite only for development
+end
+
+group :production do
+  gem "pg", "~> 1.1"  # PostgreSQL for production
 end

@@ -178,8 +178,9 @@
             <td>
               <%= link_to "View", wager, class: "btn btn-sm btn-outline-primary" %>
               <%= link_to "Edit", edit_wager_path(wager), class: "btn btn-sm btn-outline-secondary" %>
-              <%= button_to "Delete", wager, method: :delete, 
-                  confirm: "Are you sure?", 
+              <%= button_to "Delete", wager, 
+                  method: :delete,
+                  confirm: "Are you sure you want to delete this wager?",
                   class: "btn btn-sm btn-outline-danger",
                   form: { style: "display: inline-block;" } %>
             </td>

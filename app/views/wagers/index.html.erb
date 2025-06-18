@@ -176,12 +176,15 @@
               <% end %>
             </td>
             <td>
-              <%= link_to "View", wager, class: "btn btn-sm btn-outline-primary" %>
-              <%= link_to "Edit", edit_wager_path(wager), class: "btn btn-sm btn-outline-secondary" %>
-              <%= button_to 'Delete', @wager, 
-                  method: :delete,
-                  data: { confirm: "Are you sure you want to delete this wager?" },
-                  class: 'btn btn-danger' %>
+              <div class="d-flex gap-1">
+                <%= link_to "View", wager, class: "btn btn-sm btn-outline-primary" %>
+                <%= link_to "Edit", edit_wager_path(wager), class: "btn btn-sm btn-outline-secondary" %>
+                <%= button_to "Delete", wager, 
+                    method: :delete,
+                    data: { confirm: "Are you sure you want to delete this wager?" },
+                    class: "btn btn-sm btn-outline-danger",
+                    form: { style: "display: inline-block;" } %>
+              </div>
             </td>
           </tr>
         <% end %>

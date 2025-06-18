@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <h3>Import Wagers from CSV</h3>
+      </div>
+      <div class="card-body">
+        <%= form_with url: csv_import_path, method: :post, multipart: true, local: true, class: "row g-3" do |form| %>
+          
+          <div class="col-12">
+            <div class="alert alert-info">
+              <h5>CSV Format Requirements:</h5>
+              <p class="mb-2">Your CSV file should have these columns:</p>
+              <ul class="mb-2">
+                <li><strong>date</strong> - Format: YYYY-MM-DD, MM/DD/YYYY, or DD/MM/YYYY</li>
+                <li><strong>amount</strong> - Wager amount (numbers only)</li>
+                <li><strong>odds</strong> - Betting odds (e.g., +150, -110, 2.5)</li>
+                <li><strong>result</strong> - Win, Loss, or Push</li>
+                <li><strong>sportsbook</strong> - Name of the sportsbook</li>
+                <li><strong>tags</strong> - Comma-separated tags (optional)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <%= form.label :csv_file, "Select CSV File", class: "form-label" %>
+            <%= form.file_field :csv_file, accept: ".csv", required: true, class: "form-control" %>
+          </div>
+
+          <div class="col-12">
+            <%= form.submit "Import Wagers", class: "btn btn-primary" %>
+            <%= link_to "Cancel", wagers_path, class: "btn btn-secondary" %>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class="card-header">
+        <h5>Sample CSV Format</h5>
+      </div>
+      <div class="card-body">
+        <pre class="bg-light p-3 rounded"><code>date,amount,odds,result,sportsbook,tags
+2025-01-15,50.00,+150,Win,DraftKings,"NFL,Underdog"
+2025-01-14,25.00,-110,Loss,FanDuel,"NBA,Spread"
+2025-01-13,100.00,+200,Win,Caesars,"MLB,Moneyline"</code></pre>
+      </div>
+    </div>
+  </div>
+</div>

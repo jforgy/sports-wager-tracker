@@ -2,7 +2,4 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "bootstrap"
-
-// Add Rails UJS for confirmations
-import Rails from "@rails/ujs"
-Rails.start()
+import "./confirmations"

@@ -33,6 +33,9 @@ class CsvController < ApplicationController
         sportsbook = clean_row['sportsbook']
         tags = clean_row['tags']
 
+        # Capitalize the result to match validation
+        result = result&.capitalize if result
+
         wager = current_user.wagers.build(
           date: parse_date(date),
           amount: amount,

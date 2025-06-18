@@ -64,7 +64,12 @@ class CsvController < ApplicationController
   end
 
   def export
-    wagers = current_user.wagers.order(:date)
+    # Start with all user wagers
+    wagers = current_user.wagers
+    
+    # Apply the same filters as the index page
+    wagers = filter_wagers_for_export(wagers)
+    wagers = wagers.order(:date)
 
     csv_data = CSV.generate(headers: true) do |csv|
       csv << ['date', 'amount', 'odds', 'result', 'sportsbook', 'tags']
@@ -81,7 +86,13 @@ class CsvController < ApplicationController
       end
     end
 
-    filename = "wagers_export_#{Date.current.strftime('%Y%m%d')}.csv"
+    # Generate filename based on filters
+    filename = "wagers_export_#{Date.current.strftime('%Y%m%d')}"
+    filename += "_#{params[:tag]}" if params[:tag].present?
+    filename += "_#{params[:sportsbook]}" if params[:sportsbook].present?
+    filename += "_#{params[:start_date]}_to_#{params[:end_date]}" if params[:start_date].present? || params[:end_date].present?
+    filename += ".csv"
+
     send_data csv_data, filename: filename, type: 'text/csv'
   end
 
@@ -103,5 +114,30 @@ class CsvController < ApplicationController
     
     # If no format works, try to parse naturally
     Date.parse(date_string) rescue Date.current
+  end
+
+  def filter_wagers_for_export(wagers)
+    # Filter by tag
+    if params[:tag].present?
+      wagers = wagers.where("tags ILIKE ?", "%#{params[:tag]}%")
+    end
+    
+    # Filter by sportsbook
+    if params[:sportsbook].present?
+      wagers = wagers.where(sportsbook: params[:sportsbook])
+    end
+    
+    # Filter by date range
+    if params[:start_date].present?
+      start_date = Date.parse(params[:start_date]) rescue nil
+      wagers = wagers.where("date >= ?", start_date) if start_date
+    end
+    
+    if params[:end_date].present?
+      end_date = Date.parse(params[:end_date]) rescue nil
+      wagers = wagers.where("date <= ?", end_date) if end_date
+    end
+    
+    wagers
   end
 end

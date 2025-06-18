@@ -51,18 +51,19 @@ class WagersController < ApplicationController
     if @wager.save
       redirect_to @wager, notice: 'Wager was successfully created.'
     else
-      render :new
+      # Re-populate dropdowns for the form
+      populate_form_data
+      render :new, status: :unprocessable_entity
     end
-  end
-  
-  def edit
   end
   
   def update
     if @wager.update(wager_params)
       redirect_to @wager, notice: 'Wager was successfully updated.'
     else
-      render :edit
+      # Re-populate dropdowns for the form
+      populate_form_data
+      render :edit, status: :unprocessable_entity
     end
   end
   
@@ -102,6 +103,15 @@ class WagersController < ApplicationController
       end_date = Date.parse(params[:end_date]) rescue nil
       wagers = wagers.where("date <= ?", end_date) if end_date
     end
+
+    def populate_form_data
+    # Get data for any dropdowns or form helpers if needed
+    all_wagers = current_user.wagers
+    @all_sportsbooks = all_wagers.where.not(sportsbook: [nil, ''])
+                                .distinct
+                                .pluck(:sportsbook)
+                                .sort
+  end
     
     wagers
   end

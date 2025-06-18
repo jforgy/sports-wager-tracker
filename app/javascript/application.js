@@ -27,4 +27,41 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   });
+
+  // Bootstrap form validation
+  const forms = document.querySelectorAll('.needs-validation');
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    });
+  });
+
+  // Real-time validation feedback
+  document.querySelectorAll('input[required], select[required], textarea[required]').forEach(input => {
+    input.addEventListener('blur', function() {
+      if (this.checkValidity()) {
+        this.classList.remove('is-invalid');
+        this.classList.add('is-valid');
+      } else {
+        this.classList.remove('is-valid');
+        this.classList.add('is-invalid');
+      }
+    });
+
+    input.addEventListener('input', function() {
+      if (this.classList.contains('was-validated') || this.classList.contains('is-invalid')) {
+        if (this.checkValidity()) {
+          this.classList.remove('is-invalid');
+          this.classList.add('is-valid');
+        } else {
+          this.classList.remove('is-valid');
+          this.classList.add('is-invalid');
+        }
+      }
+    });
+  });
 });

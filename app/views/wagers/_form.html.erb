@@ -1,44 +1,114 @@
-<%= form_with(model: wager, local: true, class: "row g-3") do |form| %>
+<%= form_with(model: wager, local: true, class: "row g-3 needs-validation", novalidate: true) do |form| %>
   <% if wager.errors.any? %>
-    <div class="alert alert-danger">
-      <h4><%= pluralize(wager.errors.count, "error") %> prohibited this wager from being saved:</h4>
-      <ul class="mb-0">
-        <% wager.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div class="col-12">
+      <div class="alert alert-danger">
+        <h4><%= pluralize(wager.errors.count, "error") %> prohibited this wager from being saved:</h4>
+        <ul class="mb-0">
+          <% wager.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
   <div class="col-md-6">
     <%= form.label :date, class: "form-label" %>
-    <%= form.date_field :date, class: "form-control" %>
+    <%= form.date_field :date, 
+        class: "form-control #{'is-invalid' if wager.errors[:date].any?}",
+        required: true %>
+    <% if wager.errors[:date].any? %>
+      <div class="invalid-feedback">
+        <%= wager.errors[:date].first %>
+      </div>
+    <% else %>
+      <div class="invalid-feedback">
+        Please provide a valid date.
+      </div>
+    <% end %>
   </div>
 
   <div class="col-md-6">
     <%= form.label :amount, "Wager Amount ($)", class: "form-label" %>
-    <%= form.number_field :amount, step: 0.01, class: "form-control" %>
+    <%= form.number_field :amount, 
+        step: 0.01, 
+        min: 0.01,
+        class: "form-control #{'is-invalid' if wager.errors[:amount].any?}",
+        required: true %>
+    <% if wager.errors[:amount].any? %>
+      <div class="invalid-feedback">
+        <%= wager.errors[:amount].first %>
+      </div>
+    <% else %>
+      <div class="invalid-feedback">
+        Please enter a valid amount greater than $0.
+      </div>
+    <% end %>
   </div>
 
   <div class="col-md-6">
     <%= form.label :odds, "Odds (e.g., +150, -110, 2.5)", class: "form-label" %>
-    <%= form.text_field :odds, class: "form-control" %>
+    <%= form.text_field :odds, 
+        class: "form-control #{'is-invalid' if wager.errors[:odds].any?}",
+        required: true,
+        placeholder: "+150, -110, or 2.5" %>
+    <% if wager.errors[:odds].any? %>
+      <div class="invalid-feedback">
+        <%= wager.errors[:odds].first %>
+      </div>
+    <% else %>
+      <div class="invalid-feedback">
+        Please enter the odds for this wager.
+      </div>
+    <% end %>
   </div>
 
   <div class="col-md-6">
     <%= form.label :result, class: "form-label" %>
-    <%= form.select :result, options_for_select([['Win', 'Win'], ['Loss', 'Loss'], ['Push', 'Push']], wager.result), 
-                    { prompt: 'Select result' }, { class: "form-select" } %>
+    <%= form.select :result, 
+        options_for_select([['Select result...', ''], ['Win', 'Win'], ['Loss', 'Loss'], ['Push', 'Push']], wager.result), 
+        {}, 
+        { class: "form-select #{'is-invalid' if wager.errors[:result].any?}", required: true } %>
+    <% if wager.errors[:result].any? %>
+      <div class="invalid-feedback">
+        <%= wager.errors[:result].first %>
+      </div>
+    <% else %>
+      <div class="invalid-feedback">
+        Please select a result.
+      </div>
+    <% end %>
   </div>
 
   <div class="col-12">
     <%= form.label :sportsbook, class: "form-label" %>
-    <%= form.text_field :sportsbook, class: "form-control" %>
+    <%= form.text_field :sportsbook, 
+        class: "form-control #{'is-invalid' if wager.errors[:sportsbook].any?}",
+        required: true,
+        placeholder: "e.g., DraftKings, FanDuel, Caesars" %>
+    <% if wager.errors[:sportsbook].any? %>
+      <div class="invalid-feedback">
+        <%= wager.errors[:sportsbook].first %>
+      </div>
+    <% else %>
+      <div class="invalid-feedback">
+        Please enter the sportsbook name.
+      </div>
+    <% end %>
   </div>
 
   <div class="col-12">
     <%= form.label :tags, "Tags (comma separated)", class: "form-label" %>
-    <%= form.text_area :tags, rows: 2, class: "form-control" %>
+    <%= form.text_area :tags, 
+        rows: 2, 
+        class: "form-control #{'is-invalid' if wager.errors[:tags].any?}",
+        placeholder: "e.g., NFL, Spread, Underdog" %>
+    <% if wager.errors[:tags].any? %>
+      <div class="invalid-feedback">
+        <%= wager.errors[:tags].first %>
+      </div>
+    <% end %>
+    <div class="form-text">Optional: Add tags separated by commas to help categorize your wagers.</div>
   </div>
 
   <div class="col-12">
